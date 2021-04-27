@@ -6,11 +6,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "nodemon index.js",
-    "start:prod": "node index.js"
+    "start:prod": "npx pm2 index.js --instances 1 --name backend --watch --ignore-watch='node_modules' --max-memory-restart 1G --no-daemon"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "morgan": "^1.10.0",
