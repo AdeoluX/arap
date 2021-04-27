@@ -1,6 +1,6 @@
-const express = require('express')
-const cors = require('cors')
-const morgan = require('morgan')
+const express = require("express")
+const cors = require("cors")
+const morgan = require("morgan")
 
 class ServerBuilder {
   constructor() {
@@ -17,7 +17,7 @@ class ServerBuilder {
     this.server &&
       this.server
         .use(cors())
-        .use(morgan('combined'))
+        .use(morgan("combined"))
         .use(express.urlencoded({ extended: false }))
         .use(express.json())
     return this

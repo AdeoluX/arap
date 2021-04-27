@@ -1,5 +1,5 @@
-const dotenv = require('dotenv')
-const ServerBuilder = require('./src/server')
+const dotenv = require("dotenv")
+const ServerBuilder = require("./src/server")
 
 // parse envs first
 dotenv.config() // take .env by default. other path can be specified
@@ -10,7 +10,7 @@ dotenv.config() // take .env by default. other path can be specified
     await server.connectDB()
     server.listen()
   } catch (err) {
-    console.error('Server Error', { err })
+    console.error("Server Error", { err })
     process.exit(1)
   }
 })()
