@@ -1,7 +1,16 @@
-const express = require('express')
+const dotenv = require('dotenv')
+const ServerBuilder = require('./src/server')
 
-// basic setup
-const server = express()
-const PORT = parseInt(process.env.PORT) || 5005
-
-server.listen(PORT, () => console.log(`Server is listening on port ${PORT}`))
+// parse envs first
+dotenv.config() // take .env by default. other path can be specified
+;(async () => {
+  try {
+    const server = new ServerBuilder()
+    server.init().configure()
+    await server.connectDB()
+    server.listen()
+  } catch (err) {
+    console.error('Server Error', { err })
+    process.exit(1)
+  }
+})()
