@@ -5,7 +5,9 @@ const DatabaseConnector = require("./src/db.connector")
 // parse envs first
 dotenv.config() // take .env by default. other path can be specified
 
-// entry point
+/**
+ * Entry app function
+ */
 ;(async () => {
   try {
     const server = new Server(new DatabaseConnector())

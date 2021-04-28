@@ -2,10 +2,10 @@ const { HTTP_CODES, ERROR_MSG, ERROR_NAMES } = require("../constants")
 
 /**
  * App errors interceptor, which transforms error into api response with proper error message
- * @param {*} err Error
- * @param {*} req Express request
- * @param {*} res Express response
- * @param {*} next Express next
+ * @param {Error} err Error
+ * @param {Express.req} req Express request
+ * @param {Express.res} res Express response
+ * @param {Express.next} next Express next
  * @returns undefined
  */
 const errorsInterceptor = (err, req, res, next) => {

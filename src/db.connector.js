@@ -16,7 +16,7 @@ class DatabaseConnector {
     // add connection here
   }
 
-  // // example methods
+  // example methods
   // async connectMongo() {
   //   // add mongo/mongoose connect to database
   // }
