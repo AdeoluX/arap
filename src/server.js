@@ -2,36 +2,31 @@ const express = require("express")
 const cors = require("cors")
 const morgan = require("morgan")
 
-class ServerBuilder {
-  constructor() {
+class Server {
+  constructor(dbConnector) {
     this.port = parseInt(process.env.PORT) || 5000
-    this.server = null
-  }
-
-  init() {
     this.server = express()
-    return this
+    this.dbConnector = dbConnector
   }
 
   configure() {
-    this.server &&
-      this.server
-        .use(cors())
-        .use(morgan("combined"))
-        .use(express.urlencoded({ extended: false }))
-        .use(express.json())
-    return this
+    this.server
+      .use(cors())
+      .use(morgan("combined"))
+      .use(express.urlencoded({ extended: false }))
+      .use(express.json())
+
+    // TODO: add controllers
+    // TODO: add error mw
   }
 
   async connectDB() {
-    // TODO: add db connection
-    return this
+    await this.dbConnector.connect()
   }
 
   listen() {
-    this.server.listen(this.port, () => `Server is listenning on port ${this.port}`)
-    return this
+    this.server.listen(this.port, () => console.log(`Server is listenning on port ${this.port}`))
   }
 }
 
-module.exports = ServerBuilder
+module.exports = Server
