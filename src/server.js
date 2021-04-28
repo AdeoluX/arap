@@ -29,7 +29,7 @@ class ServerBuilder {
   }
 
   listen() {
-    this.server.listen(PORT, () => `Server is listenning on port ${PORT}`)
+    this.server.listen(this.port, () => `Server is listenning on port ${this.port}`)
     return this
   }
 }
