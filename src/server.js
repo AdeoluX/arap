@@ -1,6 +1,7 @@
 const express = require("express")
 const cors = require("cors")
 const morgan = require("morgan")
+const errorsInterceptor = require("./middlewares/error.interceptor")
 
 class Server {
   constructor(dbConnector) {
@@ -16,8 +17,8 @@ class Server {
       .use(express.urlencoded({ extended: false }))
       .use(express.json())
 
-    // TODO: add controllers
-    // TODO: add error mw
+      // TODO: add controllers
+      .use(errorsInterceptor)
   }
 
   async connectDB() {
@@ -25,7 +26,9 @@ class Server {
   }
 
   listen() {
-    this.server.listen(this.port, () => console.log(`Server is listenning on port ${this.port}`))
+    this.server.listen(this.port, () =>
+      console.log(`Server is listenning on port ${this.port}`)
+    )
   }
 }
 
