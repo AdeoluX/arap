@@ -2,6 +2,7 @@ const express = require("express")
 const cors = require("cors")
 const morgan = require("morgan")
 const errorsInterceptor = require("./middlewares/error.interceptor")
+const mainController = require("./controllers/main.controller")
 
 /**
  * Server creation class
@@ -13,7 +14,8 @@ class Server {
    * @param {Object} dbConnector
    */
   constructor(dbConnector) {
-    this.port = parseInt(process.env.PORT) || 5000
+    this.port = parseInt(process.env.API_PORT) || 5000
+    this.apiPrefix = process.env.API_PREFIX || "api"
     this.server = express()
     this.dbConnector = dbConnector
   }
@@ -22,13 +24,13 @@ class Server {
    * Configures server with middlewares and controllers
    */
   configure() {
+    // add middlewares here
     this.server
       .use(cors())
       .use(morgan("combined"))
       .use(express.urlencoded({ extended: false }))
       .use(express.json())
-
-      // TODO: add controllers
+      .use(this.apiPrefix, mainController)
       .use(errorsInterceptor)
   }
 
