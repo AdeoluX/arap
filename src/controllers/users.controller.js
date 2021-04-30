@@ -3,6 +3,10 @@ const { HTTP_CODES } = require("../constants")
 const errorsWrap = require("../decorators/errors-wrap.decorator")
 
 class UsersController extends AbstractController {
+  constructor() {
+    super()
+  }
+
   async getAllUsers(req, res) {
     // todo
     res.sedStatus(HTTP_CODES.notImplemented)
