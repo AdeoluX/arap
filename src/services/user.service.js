@@ -1,22 +1,46 @@
+const { ERROR_NAMES } = require("../constants")
+
+/**
+ * Example Users Service
+ */
 class UserService {
+  constructor(userModel) {
+    this.userModel = userModel
+  }
+
+  // Define db interactions models logic inside methods
+  // There are few examples below
+
   async getAllUsers() {
-    // todo
+    const users = await this.userModel.find({})
+    return users
   }
 
   async getUserById(userId) {
-    // todo
+    const user = await this.userModel.findOneById(userId)
+    if (!user) throw new Error(ERROR_NAMES.notFound)
+    return user
   }
 
   async createUser(user) {
-    // todo
+    const user = await this.userModel.create(user)
+    return user
   }
 
   async updateUserById(userId, updateObj) {
-    // todo
+    // mongo example
+    const user = this.userModel.findOneAndUpdate(
+      { _id, userId },
+      { ...updateObj },
+      { new: true }
+    )
+    if (!user) throw new Error(ERROR_NAMES.notFound)
+    return user
   }
 
   async deleteUserById(userId) {
-    // todo
+    // mongo example
+    await this.userModel.deleteOne({ _id: userId })
   }
 }
 
