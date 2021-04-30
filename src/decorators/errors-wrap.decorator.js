@@ -10,6 +10,7 @@ const errorsWrap = (handlerFn) => {
     try {
       return await handlerFn(...params)
     } catch (err) {
+      console.error("Intercepted Error: ", { err })
       params.next && params.next(err)
     }
   }

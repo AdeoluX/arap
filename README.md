@@ -9,3 +9,4 @@ TODO:
 - add swagger (auto gen docs)
 - add jsdoc
 - add test tools
+- add validator
