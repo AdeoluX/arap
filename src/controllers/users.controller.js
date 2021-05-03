@@ -3,33 +3,43 @@ const { HTTP_CODES } = require("../constants")
 const errorsWrap = require("../decorators/errors-wrap.decorator")
 
 class UsersController extends AbstractController {
-  constructor() {
+  constructor({ userService } = {}) {
     super()
+
+    this.userService = userService
   }
 
   async getAllUsers(req, res) {
-    // todo
-    res.sedStatus(HTTP_CODES.notImplemented)
+    const users = await this.userService.getAllUsers()
+    res.status(HTTP_CODES.ok).json(users)
   }
 
   async getUserById(req, res) {
-    // todo
-    res.sedStatus(HTTP_CODES.notImplemented)
+    const { userId } = req.params
+    const user = await this.userService.getUserById(userId)
+    res.status(HTTP_CODES.ok).json(user)
   }
 
   async createUser(req, res) {
-    // todo
-    res.sedStatus(HTTP_CODES.notImplemented)
+    const { user } = req.body
+    const newUser = await this.userService.createUser(user)
+    res.status(HTTP_CODES.created).json(newUser)
   }
 
   async updateUserById(req, res) {
-    // todo
-    res.sedStatus(HTTP_CODES.notImplemented)
+    const { userId } = req.params
+    const { updateObj } = req.body
+    const updatedUser = await this.userService.updateUserById({
+      userId,
+      updateObj,
+    })
+    res.status(HTTP_CODES.accepted).json(updatedUser)
   }
 
   async deleteUserById(req, res) {
-    // todo
-    res.sedStatus(HTTP_CODES.notImplemented)
+    const { userId } = req.params
+    await this.userService.deleteUserById(userId)
+    res.sendStatus(HTTP_CODES.accepted)
   }
 
   createEndpoints() {
