@@ -1,6 +1,9 @@
 const errorsWrap = require("../decorators/errors-wrap.decorator")
 const AbstractController = require("./abstract.controller")
 
+/**
+ * Auth Controller
+ */
 class AuthController extends AbstractController {
   constructor() {
     super()
