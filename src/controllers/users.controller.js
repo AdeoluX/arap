@@ -2,6 +2,9 @@ const AbstractController = require("./abstract.controller")
 const { HTTP_CODES } = require("../constants")
 const errorsWrap = require("../decorators/errors-wrap.decorator")
 
+/**
+ * Users Controller
+ */
 class UsersController extends AbstractController {
   constructor({ userService } = {}) {
     super()
