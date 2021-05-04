@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start:dev": "nodemon index.js",
-    "start:prod": "npx pm2 index.js --instances 1 --name backend --watch --ignore-watch='node_modules' --max-memory-restart 1G --no-daemon"
+    "start:prod": "npx pm2 index.js --instances 1 --name backend --watch --ignore-watch='node_modules .git' --max-memory-restart 1G --no-daemon"
   },
   "author": "",
   "license": "ISC",
