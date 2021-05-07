@@ -1,8 +1,8 @@
 const { Router } = require("express")
 
 /**
- * Abstract Controller class.
- * Used for inheritance as basic controller
+ * Base Controller class.
+ * Used for inheritance only
  */
 class BaseController {
   constructor() {
@@ -11,15 +11,16 @@ class BaseController {
 
   /**
    * Common route handler wrapper with try-catch
+   * In case of error, calls next() to pass error to express error handle middleware
    * @param {Function} asyncHandler async handler function
    * @returns Promise
    */
   async withTryCatch(asyncHandler) {
     return async (req, res, next) => {
       try {
-        console.error("Intercepted Error: ", { err })
         return await asyncHandler(req, res, next)
       } catch (error) {
+        console.error("Intercepted Error: ", { error })
         next(error)
       }
     }
@@ -28,6 +29,10 @@ class BaseController {
   /**
    * Create controller routes wrapped with try-catch
    * @param {Object} endpointsMap object with endpoints names, methods and handlers
+   * Example of endpointsMap:
+   *  {
+   *    "/test": {method: "get", handler: ()=> {}}
+   *  }
    */
   initRoutes(endpointsMap = {}) {
     const _create = (mtd, name, cb) =>
