@@ -6,7 +6,6 @@ const { HTTP_CODES, ERROR_MSG, ERROR_NAMES } = require("../constants")
  * @param {Express.req} req Express request
  * @param {Express.res} res Express response
  * @param {Express.next} next Express next
- * @returns undefined
  */
 const errorsInterceptor = (err, req, res, next) => {
   if (err) {

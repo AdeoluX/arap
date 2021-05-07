@@ -1,11 +1,13 @@
 const { Router } = require("express")
+const validationErrorsInterceptor = require("../middlewares/validation-errors.interceptor")
 
 /**
  * Base Controller class.
  * Used for inheritance only
  */
 class BaseController {
-  constructor() {
+  constructor({ useValidatorErrCapture = false } = {}) {
+    this.useValidatorErrCapture = useValidatorErrCapture
     this.router = Router()
   }
 
@@ -31,24 +33,26 @@ class BaseController {
    * @param {Object} endpointsMap object with endpoints names, methods and handlers
    * Example of endpointsMap:
    *  {
-   *    "/test": {method: "get", handler: ()=> {}}
+   *    "/test": {method: "get", middlewares: [mwFn] handler: ()=> {}}
    *  }
    */
   initRoutes(endpointsMap = {}) {
-    const _create = (mtd, name, cb) =>
-      this.router[mtd](name, this.withTryCatch(cb))
+    const _create = (name, endpointObj) => {
+      const { method, middlewares = [], handler } = endpointObj
+      const finalMiddlewares = this.useValidatorErrCapture
+        ? [...middlewares, validationErrorsInterceptor]
+        : middlewares
+
+      this.router[method](name, ...finalMiddlewares, this.withTryCatch(handler))
+    }
 
     for (const endpointName in endpointsMap) {
       if (Array.isArray(endpointsMap[endpointName])) {
         endpointsMap[endpointName].forEach((endpoint) => {
-          _create(endpoint.method, endpointName, endpoint.method)
+          _create(endpointName, endpoint)
         })
       } else {
-        _create(
-          endpointsMap[endpointName].method,
-          endpointName,
-          endpointsMap[endpointName].method
-        )
+        _create(endpointName, endpointsMap[endpointName])
       }
     }
   }

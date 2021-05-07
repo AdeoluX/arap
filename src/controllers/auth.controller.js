@@ -7,11 +7,12 @@ const { ROUTER_METHODS } = require("../constants")
  */
 class AuthController extends BaseController {
   constructor(authService) {
-    super()
+    super({ useValidatorErrCapture: true })
     this.authService = authService
 
     // use base controller build-in way to init routes
     this.initRoutes({
+      // TODO: add validations
       "/signin": { method: ROUTER_METHODS.post, handler: this.signin },
       "/signup": { method: ROUTER_METHODS.post, handler: this.signup },
     })

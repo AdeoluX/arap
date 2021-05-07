@@ -1,14 +1,13 @@
 const BaseController = require("./base.controller")
 const userService = require("../services/user.service")
 const { HTTP_CODES, ROUTER_METHODS } = require("../constants")
-const errorsWrap = require("../decorators/errors-wrap.decorator")
 
 /**
  * Users Controller
  */
 class UsersController extends BaseController {
   constructor(userService) {
-    super()
+    super({ useValidatorErrCapture: true })
     this.userService = userService
 
     // use base controller build-in way to init routes
@@ -18,8 +17,20 @@ class UsersController extends BaseController {
         { method: ROUTER_METHODS.post, handler: this.createUser },
       ],
       "/:userId": [
-        { method: ROUTER_METHODS.get, handler: this.getUserById },
-        { method: ROUTER_METHODS.patch, handler: this.updateUserById },
+        {
+          method: ROUTER_METHODS.get,
+          middlewares: [
+            /**TODO: add validations */
+          ],
+          handler: this.getUserById,
+        },
+        {
+          method: ROUTER_METHODS.patch,
+          middlewares: [
+            /**TODO: add validations */
+          ],
+          handler: this.updateUserById,
+        },
         { method: ROUTER_METHODS.delete, handler: this.deleteUserById },
       ],
     })

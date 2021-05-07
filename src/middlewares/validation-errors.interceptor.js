@@ -1,5 +1,12 @@
 const { validationResult } = require("express-validator")
 
+/**
+ * Validation errors interceptor, which transforms error into api response with proper error message
+ * @param {Error} err Error
+ * @param {Express.req} req Express request
+ * @param {Express.res} res Express response
+ * @param {Express.next} next Express next
+ */
 const validationErrorsInterceptor = (req, res, next) => {
   try {
     const errors = validationResult(req)

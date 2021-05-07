@@ -2,7 +2,6 @@ const express = require("express")
 const cors = require("cors")
 const morgan = require("morgan")
 const errorsInterceptor = require("./middlewares/error.interceptor")
-const validationErrorsInterceptor = require("./middlewares/validation-errors.interceptor")
 const mainController = require("./controllers/main.controller")
 
 /**
@@ -31,7 +30,7 @@ class Server {
       .use(morgan("combined"))
       .use(express.urlencoded({ extended: false }))
       .use(express.json())
-      .use(this.apiPrefix, validationErrorsInterceptor, mainController)
+      .use(this.apiPrefix, mainController)
       .use(errorsInterceptor)
   }
 
@@ -46,9 +45,7 @@ class Server {
    * Launches server listen to port.
    */
   listen() {
-    this.server.listen(this.port, () =>
-      console.log(`Server is listenning on port ${this.port}`)
-    )
+    this.server.listen(this.port, () => console.log(`Server is listenning on port ${this.port}`))
   }
 }
 
