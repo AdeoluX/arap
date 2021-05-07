@@ -1,15 +1,28 @@
-const AbstractController = require("./abstract.controller")
+const BaseController = require("./base.controller")
 const userService = require("../services/user.service")
-const { HTTP_CODES } = require("../constants")
+const { HTTP_CODES, ROUTER_METHODS } = require("../constants")
 const errorsWrap = require("../decorators/errors-wrap.decorator")
 
 /**
  * Users Controller
  */
-class UsersController extends AbstractController {
+class UsersController extends BaseController {
   constructor(userService) {
     super()
     this.userService = userService
+
+    // use base controller build-in way to init routes
+    this.initRoutes({
+      "/": [
+        { method: ROUTER_METHODS.get, handler: this.getAllUsers },
+        { method: ROUTER_METHODS.post, handler: this.createUser },
+      ],
+      "/:userId": [
+        { method: ROUTER_METHODS.get, handler: this.getUserById },
+        { method: ROUTER_METHODS.patch, handler: this.updateUserById },
+        { method: ROUTER_METHODS.delete, handler: this.deleteUserById },
+      ],
+    })
   }
 
   async getAllUsers(req, res) {
@@ -43,14 +56,6 @@ class UsersController extends AbstractController {
     const { userId } = req.params
     await this.userService.deleteUserById(userId)
     res.sendStatus(HTTP_CODES.accepted)
-  }
-
-  createEndpoints() {
-    this.router.get("/", errorsWrap(this.getAllUsers))
-    this.router.get("/:userId", errorsWrap(this.getUserById))
-    this.router.post("/", errorsWrap(this.createUser))
-    this.router.patch("/:userId", errorsWrap(this.updateUserById))
-    this.router.delete("/:userId", errorsWrap(this.deleteUserById))
   }
 }
 

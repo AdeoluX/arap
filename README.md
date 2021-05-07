@@ -7,6 +7,6 @@ TODO:
 - add structure for loosely coupled code
 - add users controller + service
 - add swagger (auto gen docs)
-- add jsdoc
+- add jsdoc desc to handlers
 - add test tools
 - add validator

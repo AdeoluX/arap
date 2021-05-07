@@ -2,6 +2,14 @@
  * Application constants
  */
 
+const ROUTER_METHODS = {
+  get: "get",
+  post: "post",
+  put: "put",
+  patch: "patch",
+  delete: "delete",
+}
+
 const HTTP_CODES = {
   ok: 200,
   created: 201,
@@ -38,4 +46,5 @@ module.exports = {
   HTTP_CODES,
   ERROR_MSG,
   ERROR_NAMES,
+  ROUTER_METHODS,
 }

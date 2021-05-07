@@ -1,14 +1,20 @@
-const errorsWrap = require("../decorators/errors-wrap.decorator")
-const AbstractController = require("./abstract.controller")
+const BaseController = require("./base.controller")
 const authService = require("../services/auth.service")
+const { ROUTER_METHODS } = require("../constants")
 
 /**
  * Auth Controller
  */
-class AuthController extends AbstractController {
+class AuthController extends BaseController {
   constructor(authService) {
     super()
     this.authService = authService
+
+    // use base controller build-in way to init routes
+    this.initRoutes({
+      "/signin": { method: ROUTER_METHODS.post, handler: this.signin },
+      "/signup": { method: ROUTER_METHODS.post, handler: this.signup },
+    })
   }
 
   async signin(req, res) {
@@ -17,11 +23,6 @@ class AuthController extends AbstractController {
 
   async signup(req, res) {
     // todo
-  }
-
-  createEndpoints() {
-    this.router.post("/signin", errorsWrap(this.signin))
-    this.router.post("/signup", errorsWrap(this.signup))
   }
 }
 
