@@ -50,4 +50,5 @@ class UserService {
   }
 }
 
-module.exports = UserService
+module.exports = new UserService(/*TODO: inject userModel */) // export singleton instance
+exports.UserService = UserService // export class for tests

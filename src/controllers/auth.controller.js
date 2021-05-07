@@ -1,12 +1,14 @@
 const errorsWrap = require("../decorators/errors-wrap.decorator")
 const AbstractController = require("./abstract.controller")
+const authService = require("../services/auth.service")
 
 /**
  * Auth Controller
  */
 class AuthController extends AbstractController {
-  constructor() {
+  constructor(authService) {
     super()
+    this.authService = authService
   }
 
   async signin(req, res) {
@@ -23,4 +25,5 @@ class AuthController extends AbstractController {
   }
 }
 
-module.exports = AuthController
+module.exports = new AuthController(authService) // export singleton instance
+exports.AuthController = AuthController // export class for tests

@@ -1,4 +1,5 @@
 const AbstractController = require("./abstract.controller")
+const userService = require("../services/user.service")
 const { HTTP_CODES } = require("../constants")
 const errorsWrap = require("../decorators/errors-wrap.decorator")
 
@@ -6,9 +7,8 @@ const errorsWrap = require("../decorators/errors-wrap.decorator")
  * Users Controller
  */
 class UsersController extends AbstractController {
-  constructor({ userService } = {}) {
+  constructor(userService) {
     super()
-
     this.userService = userService
   }
 
@@ -54,4 +54,5 @@ class UsersController extends AbstractController {
   }
 }
 
-module.exports = UsersController
+module.exports = new UsersController(userService) // export singleton instance
+exports.UsersController = UsersController // export class for tests

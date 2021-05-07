@@ -13,4 +13,5 @@ class AuthService {
   }
 }
 
-module.exports = AuthService
+module.exports = new AuthService() // export singleton instance
+exports.AuthService = AuthService // export class for tests

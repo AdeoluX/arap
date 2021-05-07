@@ -1,6 +1,6 @@
 const { Router } = require("express")
-const AuthController = require("./auth.controller")
-const UsersController = require("./users.controller")
+const authController = require("./auth.controller")
+const usersController = require("./users.controller")
 
 // combine controllers into one here
 
@@ -11,8 +11,6 @@ mainController.get("/test", (req, res) => {
   res.json({ ok: true })
 })
 
-mainController
-  .use("/auth", new AuthController())
-  .use("/users", new UsersController())
+mainController.use("/auth", authController).use("/users", usersController)
 
 module.exports = mainController
