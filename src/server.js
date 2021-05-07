@@ -2,6 +2,7 @@ const express = require("express")
 const cors = require("cors")
 const morgan = require("morgan")
 const errorsInterceptor = require("./middlewares/error.interceptor")
+const validationErrorsInterceptor = require("./middlewares/validation-errors.interceptor")
 const mainController = require("./controllers/main.controller")
 
 /**
@@ -30,7 +31,7 @@ class Server {
       .use(morgan("combined"))
       .use(express.urlencoded({ extended: false }))
       .use(express.json())
-      .use(this.apiPrefix, mainController)
+      .use(this.apiPrefix, validationErrorsInterceptor, mainController)
       .use(errorsInterceptor)
   }
 
