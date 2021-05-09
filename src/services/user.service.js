@@ -1,4 +1,5 @@
 const { ERROR_NAMES } = require("../constants")
+const { UserModel } = require("../models")
 
 /**
  * Users Service
@@ -35,11 +36,7 @@ class UserService {
 
   async updateUserById({ userId, updateObj }) {
     // mongo example
-    const user = this.userModel.findOneAndUpdate(
-      { _id, userId },
-      { ...updateObj },
-      { new: true }
-    )
+    const user = this.userModel.findOneAndUpdate({ _id, userId }, { ...updateObj }, { new: true })
     if (!user) throw new Error(ERROR_NAMES.notFound)
     return user
   }
@@ -50,5 +47,5 @@ class UserService {
   }
 }
 
-module.exports = new UserService(/*TODO: inject userModel */) // export singleton instance
+module.exports = new UserService(UserModel) // export singleton instance
 exports.UserService = UserService // export class for tests

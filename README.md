@@ -9,4 +9,4 @@ TODO:
 - add swagger (auto gen docs)
 - add jsdoc desc to handlers
 - add test tools
-- add validator
+- add validations and maybe dtos for more clean code
