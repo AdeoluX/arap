@@ -1,0 +1,15 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Api Docs",
+    "description": "Api Description",
+    "version": "0.0.1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5005/api"
+    }
+  ],
+  "paths": {},
+  "components": {}
+}
