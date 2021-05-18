@@ -1,7 +1,7 @@
 const express = require("express")
 const cors = require("cors")
 const morgan = require("morgan")
-const errorsInterceptor = require("./middlewares/error.interceptor")
+const errorsInterceptor = require("./interceptors/error.interceptor")
 const mainController = require("./controllers/main.controller")
 
 /**

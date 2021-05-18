@@ -1,7 +1,7 @@
 const { Router } = require("express")
 const authController = require("./auth.controller")
 const usersController = require("./users.controller")
-const authInterceptor = require("../middlewares/auth.interceptor")
+const authInterceptor = require("../interceptors/auth.interceptor")
 
 const mainController = Router()
 

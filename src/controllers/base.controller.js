@@ -1,5 +1,5 @@
 const { Router } = require("express")
-const validationErrorsInterceptor = require("../middlewares/validation-errors.interceptor")
+const validationErrorsInterceptor = require("../interceptors/validation-errors.interceptor")
 
 /**
  * Base Controller class.
