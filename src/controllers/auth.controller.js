@@ -1,6 +1,6 @@
 const BaseController = require("./base.controller")
 const authService = require("../services/auth.service")
-const { ROUTER_METHODS } = require("../constants")
+const { ROUTER_METHODS, HTTP_CODES } = require("../constants")
 
 /**
  * Auth Controller
@@ -12,18 +12,25 @@ class AuthController extends BaseController {
 
     // use base controller build-in way to init routes
     this.initRoutes({
-      // TODO: add validations
-      "/signin": { method: ROUTER_METHODS.post, handler: this.signin },
-      "/signup": { method: ROUTER_METHODS.post, handler: this.signup },
+      "/signin": {
+        method: ROUTER_METHODS.post,
+        /*add validations middleware */ handler: this.signin,
+      },
+      "/signup": {
+        method: ROUTER_METHODS.post,
+        /*add validations middleware */ handler: this.signup,
+      },
     })
   }
 
   async signin(req, res) {
-    // todo
+    // add signin logic
+    res.sendStatus(HTTP_CODES.notImplemented)
   }
 
   async signup(req, res) {
-    // todo
+    // add signup logic
+    res.sendStatus(HTTP_CODES.notImplemented)
   }
 }
 

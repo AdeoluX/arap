@@ -1,6 +1,7 @@
 const { Router } = require("express")
 const authController = require("./auth.controller")
 const usersController = require("./users.controller")
+const authInterceptor = require("../middlewares/auth.interceptor")
 
 const mainController = Router()
 
@@ -13,19 +14,18 @@ mainController.get("/test", (req, res) => {
  * Main controller
  * Combines all sub-controllers
  */
-mainController.use("/auth", authController).use("/users", usersController)
+mainController.use("/auth", authController).use("/users", authInterceptor, usersController)
 
 /**
  * Swagger Docs
- * in case of exposing docs only in development, rely on process.env
- *
- * if(process.env.NODE_ENV === "development") {
- *  setup swagger and use in controller
- * }
+ * in case of exposing swagger to prod, just remove if statement
  */
-const swaggerUi = require("swagger-ui-express")
-const swaggerDocument = require("../../swagger.json")
-mainController.use("/docs", swaggerUi.serve)
-mainController.get("/docs", swaggerUi.setup(swaggerDocument))
+if (process.env.NODE_ENV === "development") {
+  const swaggerUi = require("swagger-ui-express")
+  const swaggerDocument = require("../../swagger.json")
+
+  mainController.use("/docs", swaggerUi.serve)
+  mainController.get("/docs", swaggerUi.setup(swaggerDocument))
+}
 
 module.exports = mainController
