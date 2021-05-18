@@ -9,9 +9,10 @@ const { body } = require("express-validator")
 class UsersController extends BaseController {
   constructor(userService) {
     super({ useValidatorErrCapture: true })
+
     this.userService = userService
 
-    // use base controller build-in way to init routes
+    // use base controller build-in way to init routes and express router
     this.initRoutes({
       "/": [
         { method: ROUTER_METHODS.get, handler: this.getAllUsers },

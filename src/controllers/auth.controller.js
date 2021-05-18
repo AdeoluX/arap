@@ -10,7 +10,7 @@ class AuthController extends BaseController {
     super({ useValidatorErrCapture: true })
     this.authService = authService
 
-    // use base controller build-in way to init routes
+    // use base controller build-in way to init routes and express router
     this.initRoutes({
       "/signin": {
         method: ROUTER_METHODS.post,

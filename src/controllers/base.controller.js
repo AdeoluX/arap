@@ -17,7 +17,7 @@ class BaseController {
    * @param {Function} asyncHandler async handler function
    * @returns Promise
    */
-  async withTryCatch(asyncHandler) {
+  withTryCatch(asyncHandler) {
     return async (req, res, next) => {
       try {
         return await asyncHandler(req, res, next)
@@ -43,7 +43,11 @@ class BaseController {
         ? [...middlewares, validationErrorsInterceptor]
         : middlewares
 
-      this.router[method](name, ...finalMiddlewares, this.withTryCatch(handler))
+      this.router[method](
+        name,
+        ...finalMiddlewares,
+        this.withTryCatch(handler.bind(this))
+      )
     }
 
     for (const endpointName in endpointsMap) {
@@ -55,6 +59,10 @@ class BaseController {
         _create(endpointName, endpointsMap[endpointName])
       }
     }
+  }
+
+  get routes() {
+    return this.router
   }
 }
 

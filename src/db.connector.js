@@ -14,6 +14,7 @@ class DatabaseConnector {
    */
   async connect() {
     // add connection here
+    console.log("TODO: database connection")
   }
 
   // example methods

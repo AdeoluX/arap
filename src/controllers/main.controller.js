@@ -14,7 +14,9 @@ mainController.get("/test", (req, res) => {
  * Main controller
  * Combines all sub-controllers
  */
-mainController.use("/auth", authController).use("/users", authInterceptor, usersController)
+mainController
+  .use("/auth", authController.routes)
+  .use("/users", authInterceptor, usersController.routes)
 
 /**
  * Swagger Docs

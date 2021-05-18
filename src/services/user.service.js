@@ -17,7 +17,7 @@ class UserService {
    * @returns Array<User>
    */
   async getAllUsers() {
-    const users = await this.userModel.find({})
+    // const users = await this.userModel.find({})
     // return users
     return [] //mocked
   }
@@ -28,8 +28,8 @@ class UserService {
    * @returns User
    */
   async getUserById(userId) {
-    const user = await this.userModel.findOneById(userId)
-    if (!user) throw new Error(ERROR_NAMES.notFound)
+    // const user = await this.userModel.findOneById(userId)
+    // if (!user) throw new Error(ERROR_NAMES.notFound)
     // return user
     return {} //mocked
   }
@@ -40,8 +40,8 @@ class UserService {
    * @returns User
    */
   async getUserByEmail(email) {
-    const user = await this.userModel.findOne({ email })
-    if (!user) throw new Error(ERROR_NAMES.notFound)
+    // const user = await this.userModel.findOne({ email })
+    // if (!user) throw new Error(ERROR_NAMES.notFound)
     // return user
     return {} //mocked
   }
@@ -52,7 +52,7 @@ class UserService {
    * @returns User
    */
   async createUser(user) {
-    const user = await this.userModel.create(user)
+    // const createdUser = await this.userModel.create(user)
     // return user
     return {} //mocked
   }
@@ -64,8 +64,12 @@ class UserService {
    */
   async updateUserById({ userId, updateObj }) {
     // mongo example
-    const user = this.userModel.findOneAndUpdate({ _id, userId }, { ...updateObj }, { new: true })
-    if (!user) throw new Error(ERROR_NAMES.notFound)
+    // const user = this.userModel.findOneAndUpdate(
+    //   { _id, userId },
+    //   { ...updateObj },
+    //   { new: true }
+    // )
+    // if (!user) throw new Error(ERROR_NAMES.notFound)
     // return user
     return {} //mocked
   }
@@ -76,7 +80,7 @@ class UserService {
    */
   async deleteUserById(userId) {
     // mongo example
-    await this.userModel.deleteOne({ _id: userId })
+    // await this.userModel.deleteOne({ _id: userId })
   }
 }
 

@@ -24,13 +24,13 @@ class Server {
    * Configures server with middlewares and controllers
    */
   configure() {
-    // add middlewares here
+    // add auth middlewares here, e.g. passport
     this.server
       .use(cors())
       .use(morgan("combined"))
       .use(express.urlencoded({ extended: false }))
       .use(express.json())
-      .use(this.apiPrefix, mainController)
+      .use(`/${this.apiPrefix}`, mainController)
       .use(errorsInterceptor)
   }
 
@@ -45,7 +45,9 @@ class Server {
    * Launches server listen to port.
    */
   listen() {
-    this.server.listen(this.port, () => console.log(`Server is listenning on port ${this.port}`))
+    this.server.listen(this.port, () =>
+      console.log(`Server is listenning on port ${this.port}`)
+    )
   }
 }
 
