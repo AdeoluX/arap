@@ -1,9 +1,7 @@
-const dotenv = require("dotenv")
+// parse envs first
+require("dotenv").config()
 const Server = require("./src/server")
 const DatabaseConnector = require("./src/db.connector")
-
-// parse envs first
-dotenv.config() // take .env by default. other path can be specified
 
 /**
  * Entry app function

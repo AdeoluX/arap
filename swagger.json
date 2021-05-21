@@ -10,6 +10,10 @@
       "url": "http://localhost:5005/api"
     }
   ],
-  "paths": {},
-  "components": {}
+  "paths": {
+    "__comment": "TODO: define endpoints here"
+  },
+  "components": {
+    "__comment": "TODO: define schemas and dtos here"
+  }
 }
