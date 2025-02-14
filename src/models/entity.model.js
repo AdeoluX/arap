@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 
-class UserModel {
+class EntityModel {
   constructor() {
     this.schema = new mongoose.Schema({
-      tag: { type: String, required: true, unique: true },
-      username: { type: String, required: true, unique: true },
+      tag: { type: String },
+      name: { type: String, required: true, unique: true },
+      type: { type: String, required: true, enum: [ 'household', 'business' ] },
       email: { type: String, required: true, unique: true },
       password: { type: String, required: true },
       createdAt: { type: Date, default: Date.now },
@@ -16,7 +17,7 @@ class UserModel {
       next();
     });
 
-    this.model = mongoose.model('User', this.schema); // Create the model
+    this.model = mongoose.model('Entity', this.schema); // Create the model
   }
 
   getModel() {  // Method to get the model
@@ -24,5 +25,5 @@ class UserModel {
   }
 }
 
-const userModel = new UserModel(); // Create an instance of the model class
-module.exports = userModel.getModel(); // Export the actual Mongoose model
+const entityModel = new EntityModel(); // Create an instance of the model class
+module.exports = entityModel.getModel(); // Export the actual Mongoose model

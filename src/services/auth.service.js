@@ -1,15 +1,60 @@
+const bcryptjs = require("bcryptjs");
+const jwt = require('jsonwebtoken')
+const serviceResponse = require("../helper/service.error.utils");
+const { EntityModel, UserModel } = require("../models");
 /**
  * Auth Service
  */
 class AuthService {
   // TODO: add auth logic with passport
 
-  async signin() {
-    // todo
+  async signup({name, password, confirmPassword, type, email}) {
+    try{
+      // todo
+      let entity = await EntityModel.findOne({
+        email
+      });
+      if(entity) return serviceResponse(false, 'Entity already exists', null);
+      if(password !== confirmPassword) return serviceResponse(false, 'Passwords do not match', null);
+      entity = await EntityModel.create({
+        name, email, password: bcryptjs.hashSync(password, 10), type
+      });
+      return serviceResponse(true, 'Signup successfull', entity)
+    }catch(e){
+      return serviceResponse(false, e.message, {})
+    }
   }
 
-  async signup() {
-    // todo
+  async signin({ email, password }) {
+    try{
+      let client = (await EntityModel.findOne({
+        email
+      })) ? {
+        clientType: 'entity',
+        doc: await EntityModel.findOne({
+          email
+        })
+      } : {
+        clientType: 'user',
+        doc: await UserModel.findOne({
+          email
+        })
+      }
+      if(!client?.doc) return serviceResponse(false, 'Invalid credentials', {});
+      const passwordCheck = bcryptjs.compare(password, client.doc.password);
+      if(!passwordCheck) return serviceResponse(false, 'Invalid credentials', { });
+      const token = jwt.sign({
+        email: client.doc.email,
+        id: client.doc._id,
+        type: client.clientType
+      }, process.env.JWT_SECRET)
+      return serviceResponse(true, 'Signed In successfully', {
+        token,
+        client: client?.doc
+      })
+    }catch(e){
+      return serviceResponse(false, e.message, {})
+    }
   }
 }
 

@@ -1,6 +1,7 @@
 const BaseController = require("./base.controller")
 const authService = require("../services/auth.service")
 const { ROUTER_METHODS, HTTP_CODES } = require("../constants")
+const responder = require("../helper/controller.responder")
 
 /**
  * Auth Controller
@@ -25,12 +26,24 @@ class AuthController extends BaseController {
 
   async signin(req, res) {
     // add signin logic
-    res.sendStatus(HTTP_CODES.notImplemented)
+    const { email, password } = req.body;
+    const result = await this.authService.signin({
+      email, password
+    })
+    if(!result?.success) return responder(res, HTTP_CODES.badRequest, result)
+    return responder(res, HTTP_CODES.ok, result)
   }
 
   async signup(req, res) {
     // add signup logic
-    res.sendStatus(HTTP_CODES.notImplemented)
+    const {
+      name, type, email, password, confirmPassword
+    } = req.body
+    const result = await this.authService.signup({
+      name, type, email, password, confirmPassword
+    })
+    if(!result?.success) return responder(res, HTTP_CODES.badRequest, result)
+    return responder(res, HTTP_CODES.created, result)
   }
 }
 
