@@ -9,7 +9,7 @@
     "test:watch": "jest --watch --coverage",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start:dev": "nodemon index.js",
-    "start:prod": "npx pm2 index.js --instances 1 --name backend --watch --ignore-watch='node_modules .git' --max-memory-restart 1G --no-daemon"
+    "start:prod": "node index.js"
   },
   "author": "",
   "license": "ISC",
