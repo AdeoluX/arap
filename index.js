@@ -13,6 +13,7 @@ const DatabaseConnector = require("./src/db.connector")
     server.configure()
     await server.connectDB()
     server.listen()
+    // server.jobs()
   } catch (err) {
     console.error("Server Error", { err })
     process.exit(1)

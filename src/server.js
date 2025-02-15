@@ -1,8 +1,9 @@
-const express = require("express")
-const cors = require("cors")
-const morgan = require("morgan")
-const errorsInterceptor = require("./interceptors/error.interceptor")
-const mainController = require("./controllers/main.controller")
+const express = require("express");
+const cors = require("cors");
+const morgan = require("morgan");
+const errorsInterceptor = require("./interceptors/error.interceptor");
+const mainController = require("./controllers/main.controller");
+const agenda = require("./helper/queue.helper");
 
 /**
  * Server creation class
@@ -14,10 +15,10 @@ class Server {
    * @param {Object} dbConnector
    */
   constructor(dbConnector) {
-    this.port = parseInt(process.env.API_PORT) || 5000
-    this.apiPrefix = process.env.API_PREFIX || "api"
-    this.server = express()
-    this.dbConnector = dbConnector
+    this.port = parseInt(process.env.API_PORT) || 5000;
+    this.apiPrefix = process.env.API_PREFIX || "api";
+    this.server = express();
+    this.dbConnector = dbConnector;
   }
 
   /**
@@ -31,24 +32,25 @@ class Server {
       .use(express.urlencoded({ extended: false }))
       .use(express.json())
       .use(`/${this.apiPrefix}`, mainController)
-      .use(errorsInterceptor)
+      .use(errorsInterceptor);
   }
 
   /**
    * Connects to database using provided dbConnector
    */
   async connectDB() {
-    this.dbConnector && (await this.dbConnector.connect())
+    this.dbConnector && (await this.dbConnector.connect());
   }
 
   /**
-   * Launches server listen to port.
+   * Launches server and listens on port.
    */
   listen() {
+    agenda.start().then(() => console.log('Agenda started successfully'))
     this.server.listen(this.port, () =>
-      console.log(`Server is listenning on port ${this.port}`)
-    )
+      console.log(`Server is listening on port ${this.port}`)
+    );
   }
 }
 
-module.exports = Server
+module.exports = Server;

@@ -2,6 +2,7 @@ const BaseController = require("./base.controller")
 const authService = require("../services/auth.service")
 const { ROUTER_METHODS, HTTP_CODES } = require("../constants")
 const responder = require("../helper/controller.responder")
+const authInterceptor = require("../interceptors/auth.interceptor")
 
 /**
  * Auth Controller
@@ -20,6 +21,13 @@ class AuthController extends BaseController {
       "/signup": {
         method: ROUTER_METHODS.post,
         /*add validations middleware */ handler: this.signup,
+      },
+      "/add-user": {
+        method: ROUTER_METHODS.post,
+        middlewares: [
+          authInterceptor('entity')
+        ],
+        handler: this.addUser
       },
     })
   }
@@ -43,6 +51,16 @@ class AuthController extends BaseController {
       name, type, email, password, confirmPassword
     })
     if(!result?.success) return responder(res, HTTP_CODES.badRequest, result)
+    return responder(res, HTTP_CODES.created, result)
+  }
+
+  async addUser(req, res) {
+    const { id: authId, type } = req.auth
+    const { username, email } = req.body;
+    const result = await this.authService.addUser({
+      email, username, entity: authId
+    })
+    if(!result?.success) return responder(res, HTTP_CODES.badRequest, result);
     return responder(res, HTTP_CODES.created, result)
   }
 }

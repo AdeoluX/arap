@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 class EntityModel {
   constructor() {
     this.schema = new mongoose.Schema({
-      tag: { type: String },
       name: { type: String, required: true, unique: true },
       type: { type: String, required: true, enum: [ 'household', 'business' ] },
       email: { type: String, required: true, unique: true },

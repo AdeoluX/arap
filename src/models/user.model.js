@@ -3,9 +3,10 @@ const mongoose = require('mongoose');
 class UserModel {
   constructor() {
     this.schema = new mongoose.Schema({
-      tag: { type: String, required: true, unique: true },
+      tag: { type: String },
       username: { type: String, required: true, unique: true },
       email: { type: String, required: true, unique: true },
+      entity: { type: mongoose.Schema.Types.ObjectId, ref: 'Entity', required: true },
       password: { type: String, required: true },
       createdAt: { type: Date, default: Date.now },
       updatedAt: { type: Date, default: Date.now },
